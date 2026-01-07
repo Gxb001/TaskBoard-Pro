@@ -11,14 +11,14 @@ import { NotificationService } from '../../core/services/notification.service';
         <div class="notification" [class]="notification.type" (click)="dismiss(notification.id)">
           <span class="notification-icon">
             @switch (notification.type) {
-              @case ('success') { OK }
-              @case ('error') { X }
-              @case ('warning') { ! }
-              @default { i }
+              @case ('success') { ✓ }
+              @case ('error') { ✕ }
+              @case ('warning') { ⚠ }
+              @default { ℹ }
             }
           </span>
           <span class="notification-message">{{ notification.message }}</span>
-          <button class="notification-close">x</button>
+          <button class="notification-close">✕</button>
         </div>
       }
     </div>
@@ -39,22 +39,71 @@ import { NotificationService } from '../../core/services/notification.service';
       align-items: center;
       gap: 0.75rem;
       padding: 1rem 1.25rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       cursor: pointer;
       animation: slideIn 0.3s ease;
+      transition: transform 0.2s;
+    }
+    .notification:hover {
+      transform: translateX(-5px);
     }
     @keyframes slideIn {
       from { transform: translateX(100%); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
     }
-    .notification.success { background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%); color: white; }
-    .notification.error { background: linear-gradient(135deg, #f44336 0%, #c62828 100%); color: white; }
-    .notification.warning { background: linear-gradient(135deg, #ff9800 0%, #ef6c00 100%); color: white; }
-    .notification.info { background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%); color: white; }
-    .notification-icon { font-size: 1.2rem; font-weight: bold; }
-    .notification-message { flex: 1; font-size: 0.95rem; font-weight: 500; }
-    .notification-close { background: none; border: none; color: rgba(255, 255, 255, 0.8); font-size: 1rem; cursor: pointer; }
+    .notification.success {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.9) 100%);
+      color: white;
+    }
+    .notification.error {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.9) 0%, rgba(185, 28, 28, 0.9) 100%);
+      color: white;
+    }
+    .notification.warning {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.9) 0%, rgba(217, 119, 6, 0.9) 100%);
+      color: white;
+    }
+    .notification.info {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.9) 0%, rgba(37, 99, 235, 0.9) 100%);
+      color: white;
+    }
+    .notification-icon {
+      font-size: 1.1rem;
+      font-weight: bold;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+    .notification-message {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .notification-close {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .notification-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
   `]
 })
 export class NotificationsComponent {

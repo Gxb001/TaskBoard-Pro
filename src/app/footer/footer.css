@@ -1,24 +1,27 @@
 .footer {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.25rem 2rem;
   margin-top: auto;
 }
 
 .footer-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   text-align: center;
 }
 
 .footer p {
-  color: white;
+  color: var(--text-muted);
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .footer-tagline {
-  margin-top: 0.5rem !important;
-  opacity: 0.8;
-  font-size: 0.8rem !important;
+  margin-top: 0.3rem !important;
+  font-size: 0.75rem !important;
+  color: var(--text-muted);
 }
 
