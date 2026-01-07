@@ -1,0 +1,51 @@
+<div class="home">
+  <div class="hero">
+    <h1>{{ title }}</h1>
+    <p class="subtitle">Votre solution de gestion de tâches moderne et efficace</p>
+
+    <!-- Stats en temps réel avec async pipe -->
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-number">{{ totalTasks$ | async }}</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-item completed">
+        <span class="stat-number">{{ completedCount$ | async }}</span>
+        <span class="stat-label">Terminées</span>
+      </div>
+      <div class="stat-item pending">
+        <span class="stat-number">{{ pendingCount$ | async }}</span>
+        <span class="stat-label">En cours</span>
+      </div>
+      <div class="stat-item progress">
+        <span class="stat-number">{{ progressPercentage$ | async }}%</span>
+        <span class="stat-label">Progression</span>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <a routerLink="/tasks" class="btn-cta">
+        📋 Gérer mes tâches
+      </a>
+    </div>
+  </div>
+
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Organisez vos tâches</h3>
+      <p>Créez, modifiez et organisez vos tâches facilement</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Suivez votre progression</h3>
+      <p>Visualisez l'avancement de vos projets en temps réel</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <h3>Boostez votre productivité</h3>
+      <p>Atteignez vos objectifs plus rapidement</p>
+    </div>
+  </div>
+</div>
+

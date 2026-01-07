@@ -1,0 +1,24 @@
+.footer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem 2rem;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer p {
+  color: white;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.footer-tagline {
+  margin-top: 0.5rem !important;
+  opacity: 0.8;
+  font-size: 0.8rem !important;
+}
+

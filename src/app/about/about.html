@@ -1,0 +1,64 @@
+<div class="about">
+  <h1>{{ title }}</h1>
+
+  <div class="about-content">
+    <section class="about-section">
+      <h2>Notre Mission</h2>
+      <p>
+        TaskBoard Pro est une application de gestion de tâches conçue pour vous aider
+        à organiser votre travail quotidien de manière simple et efficace.
+      </p>
+    </section>
+
+    <!-- Statistiques en temps réel avec async pipe -->
+    <section class="about-section stats-section">
+      <h2>📊 Statistiques en temps réel</h2>
+      <p class="stats-intro">Ces données sont synchronisées avec la page Home grâce à RxJS et les Observables.</p>
+      <div class="live-stats">
+        <div class="live-stat">
+          <span class="live-stat-value">{{ totalTasks$ | async }}</span>
+          <span class="live-stat-label">Tâches totales</span>
+        </div>
+        <div class="live-stat completed">
+          <span class="live-stat-value">{{ completedCount$ | async }}</span>
+          <span class="live-stat-label">Terminées</span>
+        </div>
+        <div class="live-stat pending">
+          <span class="live-stat-value">{{ pendingCount$ | async }}</span>
+          <span class="live-stat-label">En cours</span>
+        </div>
+        <div class="live-stat progress">
+          <span class="live-stat-value">{{ progressPercentage$ | async }}%</span>
+          <span class="live-stat-label">Progression</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Fonctionnalités</h2>
+      <ul>
+        <li>Création et gestion de tâches</li>
+        <li>Organisation par priorités</li>
+        <li>Suivi de la progression en temps réel</li>
+        <li>Interface intuitive et moderne</li>
+        <li>Données réactives avec RxJS</li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2>Technologies</h2>
+      <p>
+        Cette application est construite avec Angular 20, utilisant les dernières
+        fonctionnalités du framework pour une expérience utilisateur optimale.
+      </p>
+      <ul class="tech-list">
+        <li><strong>Angular 20</strong> - Framework frontend moderne</li>
+        <li><strong>RxJS</strong> - Programmation réactive avec Observables</li>
+        <li><strong>TypeScript</strong> - Typage statique</li>
+        <li><strong>Async Pipe</strong> - Gestion automatique des subscriptions</li>
+        <li><strong>BehaviorSubject</strong> - État réactif partagé</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
