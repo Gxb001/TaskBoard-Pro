@@ -49,6 +49,42 @@ export class TasksComponent {
     }
   }
 
+  // Reset les tâches aux valeurs par défaut
+  resetTasks(): void {
+    if (confirm('Voulez-vous vraiment réinitialiser toutes les tâches aux valeurs par défaut ?')) {
+      this.taskService.resetToDefaultTasks();
+    }
+  }
+
+  // Exporter les tâches en JSON
+  exportTasks(): void {
+    const json = this.taskService.exportTasksToJson();
+    const blob = new Blob([json], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'tasks-export.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  // Importer des tâches depuis un fichier JSON
+  importTasks(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        const jsonString = reader.result as string;
+        this.taskService.importTasksFromJson(jsonString);
+        input.value = '';
+      };
+      reader.readAsText(file);
+    }
+  }
+
   // Mettre en avant une tâche (composant dynamique)
   highlightTask(task: Task): void {
     this.clearDynamicComponent();

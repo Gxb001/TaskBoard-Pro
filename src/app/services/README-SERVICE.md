@@ -144,7 +144,7 @@ totalTasks$ = this.taskService.totalTasks$;
 
 ## 📝 Notes techniques
 
-- **Angular 20** : Utilisation des nouvelles syntaxes `@for` et `@empty`
+- **Angular 21** : Utilisation des nouvelles syntaxes `@for` et `@empty = changement pour les tests`
 - **Standalone components** : Pas besoin de NgModule
 - **inject()** : Nouvelle façon d'injecter les dépendances
 - **CommonModule** : Importé pour utiliser le pipe `async` et `date`

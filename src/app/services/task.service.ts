@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import {BehaviorSubject, map, Observable, skip, tap} from 'rxjs';
 import { Task } from '../models/task.model';
 import { NotificationService } from '../core/services/notification.service';
 import { SecurityService } from '../core/services/security.service';
@@ -11,9 +11,10 @@ export class TaskService {
   private notificationService = inject(NotificationService);
   private securityService = inject(SecurityService);
 
-  // BehaviorSubject pour maintenir l'état des taches
+  private readonly STORAGE_KEY = 'taskboard-pro-tasks';
+  // Données initiales par défaut
   // Création de quelques taches initiales pour la démo
-  private tasksSubject = new BehaviorSubject<Task[]>([
+  private readonly defaultTasks: Task[] = [
     {
       id: 1,
       title: 'Apprendre Angular',
@@ -54,7 +55,10 @@ export class TaskService {
       priority: 'low',
       createdAt: new Date()
     }
-  ]);
+  ];
+
+  // BehaviorSubject pour maintenir l'état des taches
+  private tasksSubject = new BehaviorSubject<Task[]>(this.loadTasksFromStorage());
 
   // Observable
   tasks$: Observable<Task[]> = this.tasksSubject.asObservable();
@@ -89,6 +93,65 @@ export class TaskService {
   );
 
   constructor() {
+    // Sauvegarder automatiquement les tâches à chaque changement
+    skip(1);
+    this.tasks$.subscribe(tasks => this.saveTasksToStorage(tasks));
+  }
+
+  // Charger les taches depuis le localStorage
+  private loadTasksFromStorage(): Task[] {
+    try {
+      const storedData = localStorage.getItem(this.STORAGE_KEY);
+      if (storedData) {
+        const tasks: Task[] = JSON.parse(storedData);
+        return tasks.map(task => ({
+          ...task,
+          createdAt: new Date(task.createdAt)
+        }));
+      }
+    } catch (error) {
+      console.error('[TaskService] Erreur lors du chargement des tâches:', error);
+    }
+    // Retourner les taches par défaut si aucune donnée n'est trouvée
+    return this.defaultTasks;
+  }
+
+  // Sauvegarder les taches dans le localStorage
+  private saveTasksToStorage(tasks: Task[]): void {
+    try {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(tasks));
+    } catch (error) {
+      console.error('[TaskService] Erreur lors de la sauvegarde des tâches:', error);
+    }
+  }
+
+  // Réinitialiser les taches aux valeurs par défaut
+  resetToDefaultTasks(): void {
+    localStorage.removeItem(this.STORAGE_KEY);
+    this.tasksSubject.next(this.defaultTasks);
+    this.notificationService.info('Tâches réinitialisées aux valeurs par défaut');
+  }
+
+  // Exporter les taches en JSON
+  exportTasksToJson(): string {
+    return JSON.stringify(this.tasksSubject.getValue(), null, 2);
+  }
+
+  // Importer des taches depuis un JSON
+  importTasksFromJson(jsonString: string): boolean {
+    try {
+      const tasks: Task[] = JSON.parse(jsonString);
+      const validatedTasks = tasks.map(task => ({
+        ...task,
+        createdAt: new Date(task.createdAt)
+      }));
+      this.tasksSubject.next(validatedTasks);
+      this.notificationService.success('Tâches importées avec succès');
+      return true;
+    } catch (error) {
+      this.notificationService.error('Erreur lors de l\'importation des tâches');
+      return false;
+    }
   }
 
   // Ajouter une nouvelle tache

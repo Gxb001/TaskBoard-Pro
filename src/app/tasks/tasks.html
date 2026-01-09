@@ -44,11 +44,29 @@
     <div [style.width.%]="progressPercentage$ | async" class="progress-bar"></div>
   </div>
 
+  <!-- Gestion des données -->
+  <section class="data-management-section">
+    <h2><i class="bi bi-database"></i> Gestion des données</h2>
+    <div class="data-actions">
+      <button (click)="resetTasks()" class="btn-reset" title="Réinitialiser aux valeurs par défaut">
+        <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
+      </button>
+      <button (click)="exportTasks()" class="btn-export" title="Exporter les tâches en JSON">
+        <i class="bi bi-download"></i> Exporter JSON
+      </button>
+      <label class="btn-import" title="Importer des tâches depuis un fichier JSON">
+        <i class="bi bi-upload"></i> Importer JSON
+        <input #fileInput (change)="importTasks($event)" accept=".json" hidden type="file">
+      </label>
+    </div>
+  </section>
+
   <!-- Formulaire d'ajout -->
   <section class="add-task-section">
     <h2><i class="bi bi-plus-circle"></i> Nouvelle tâche</h2>
-    <form (submit)="$event.preventDefault(); addTask(taskTitle.value, taskDesc.value, taskPriority.value); taskTitle.value=''; taskDesc.value=''"
-          class="add-task-form">
+    <form
+      (submit)="$event.preventDefault(); addTask(taskTitle.value, taskDesc.value, taskPriority.value); taskTitle.value=''; taskDesc.value=''"
+      class="add-task-form">
       <div class="form-row">
         <input #taskTitle class="form-input" placeholder="Titre de la tâche *" required type="text">
         <select #taskPriority class="form-select">
